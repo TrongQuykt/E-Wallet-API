@@ -1,4 +1,4 @@
-# 💳 E-Wallet API
+# E-Wallet API
 
 <div align="center">
 
@@ -17,7 +17,7 @@
 
 ---
 
-## 📋 Mục Lục
+## Mục Lục
 
 - [Tính Năng Nổi Bật](#-tính-năng-nổi-bật)
 - [Tech Stack](#-tech-stack)
@@ -32,22 +32,22 @@
 
 ---
 
-## ✨ Tính Năng Nổi Bật
+## Tính Năng Nổi Bật
 
 | Tính Năng | Mô Tả |
 |---|---|
-| 🔐 **Sanctum Auth** | Token-based authentication với RateLimiter chặn brute-force (lockout sau 5 lần sai) |
-| 💰 **BCMath Precision** | Tính toán số dư tài chính `DECIMAL(15,2)` qua BCMath, loại bỏ sai số float |
-| 🔒 **Pessimistic Locking** | `SELECT ... FOR UPDATE` ngăn chặn Race Condition khi nhiều tiến trình ghi đồng thời |
-| 🛡️ **Anti-Deadlock** | Lock các ví theo thứ tự ID tăng dần trong `TransferService`, triệt tiêu deadlock chéo |
-| 🔑 **Webhook HMAC-SHA256** | Xác thực chữ ký số mỗi webhook nạp tiền từ cổng thanh toán |
-| 📊 **Audit Command** | `wallet:audit` đối soát số dư ví với Eloquent Chunking (không tốn RAM) |
-| 📝 **JSON Logging** | Channel `transactions` ghi log tài chính dạng JSON chuẩn cho ETL/monitoring |
-| 📖 **Swagger OpenAPI 3.0** | Tài liệu API tự động sinh từ PHP 8 Attributes annotations |
+|  **Sanctum Auth** | Token-based authentication với RateLimiter chặn brute-force (lockout sau 5 lần sai) |
+|  **BCMath Precision** | Tính toán số dư tài chính `DECIMAL(15,2)` qua BCMath, loại bỏ sai số float |
+|  **Pessimistic Locking** | `SELECT ... FOR UPDATE` ngăn chặn Race Condition khi nhiều tiến trình ghi đồng thời |
+|  **Anti-Deadlock** | Lock các ví theo thứ tự ID tăng dần trong `TransferService`, triệt tiêu deadlock chéo |
+|  **Webhook HMAC-SHA256** | Xác thực chữ ký số mỗi webhook nạp tiền từ cổng thanh toán |
+|  **Audit Command** | `wallet:audit` đối soát số dư ví với Eloquent Chunking (không tốn RAM) |
+|  **JSON Logging** | Channel `transactions` ghi log tài chính dạng JSON chuẩn cho ETL/monitoring |
+|  **Swagger OpenAPI 3.0** | Tài liệu API tự động sinh từ PHP 8 Attributes annotations |
 
 ---
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 - **Framework**: Laravel 12.x · PHP 8.2 (`strict_types=1` toàn hệ thống)
 - **Database**: MySQL 8 — schema `DECIMAL(15,2)` cho tất cả trường tiền tệ
@@ -58,7 +58,7 @@
 
 ---
 
-## 🏗 Kiến Trúc Hệ Thống
+##  Kiến Trúc Hệ Thống
 
 ### Request Pipeline
 
@@ -114,7 +114,7 @@ TransferService::transfer(senderId=3, receiverId=1)
 
 ---
 
-## 📊 ER Diagram
+##  ER Diagram
 
 ```mermaid
 erDiagram
@@ -211,7 +211,7 @@ erDiagram
 
 ---
 
-## 🌐 API Endpoints
+## API Endpoints
 
 ### Authentication
 
@@ -259,7 +259,7 @@ erDiagram
 
 ---
 
-## 🚀 Cài Đặt & Khởi Chạy
+##  Cài Đặt & Khởi Chạy
 
 ### Yêu Cầu Hệ Thống
 
@@ -320,7 +320,7 @@ Server chạy tại: `http://127.0.0.1:8000`
 
 ---
 
-## 📖 Swagger UI
+## Swagger UI
 
 Truy cập tài liệu API tương tác:
 
@@ -342,7 +342,7 @@ php artisan l5-swagger:generate
 
 ---
 
-## 🧪 Kiểm Thử
+## Kiểm Thử
 
 Chạy toàn bộ test suite (dùng SQLite in-memory, không cần MySQL):
 
@@ -386,7 +386,7 @@ php artisan test
 
 ---
 
-## 🔧 Artisan Commands
+## Artisan Commands
 
 ### Đối Soát Số Dư (`wallet:audit`)
 
@@ -418,7 +418,7 @@ CẢNH BÁO: Phát hiện 2 tài khoản bị lệch số dư!
 
 ---
 
-## 📁 Cấu Trúc Thư Mục
+## Cấu Trúc Thư Mục
 
 ```
 app/
@@ -465,7 +465,7 @@ tests/Feature/
 
 ---
 
-## 🔐 Bảo Mật
+## Bảo Mật
 
 - **SQL Injection**: Eloquent ORM + PDO Prepared Statements.
 - **Brute-force Login**: Laravel `RateLimiter` — lockout 15 phút sau 5 lần sai.
@@ -475,7 +475,6 @@ tests/Feature/
 - **Soft Delete**: Dữ liệu users, bank_accounts không bao giờ bị xóa cứng.
 
 ---
+## Liên hệ
 
-## 📄 License
-
-MIT License — Dự án học thuật, minh họa kiến trúc hệ thống nâng cao với Laravel.
+Email: vyquy633@gmail.com
