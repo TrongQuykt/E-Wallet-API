@@ -1,0 +1,704 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "E-Wallet API Documentation",
+        "description": "Hệ thống REST API Ví Điện Tử (E-Wallet) - Laravel 11",
+        "contact": {
+            "email": "admin@e-wallet.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000",
+            "description": "E-Wallet API Server"
+        }
+    ],
+    "paths": {
+        "/api/v1/addresses": {
+            "get": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Danh sách địa chỉ của người dùng",
+                "operationId": "getAddresses",
+                "responses": {
+                    "200": {
+                        "description": "Thành công"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Thêm địa chỉ mới",
+                "operationId": "storeAddress",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "type",
+                                    "street"
+                                ],
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "example": "home"
+                                    },
+                                    "street": {
+                                        "type": "string",
+                                        "example": "123 Nguyễn Huệ"
+                                    },
+                                    "ward": {
+                                        "type": "string",
+                                        "example": "Bến Nghé"
+                                    },
+                                    "district": {
+                                        "type": "string",
+                                        "example": "Quận 1"
+                                    },
+                                    "province": {
+                                        "type": "string",
+                                        "example": "Hồ Chí Minh"
+                                    },
+                                    "is_default": {
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Đã tạo mới địa chỉ thành công"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/addresses/{id}": {
+            "put": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Cập nhật thông tin địa chỉ",
+                "operationId": "updateAddress",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "street": {
+                                        "type": "string",
+                                        "example": "145 Nguyễn Huệ"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Cập nhật thành công"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Xóa địa chỉ",
+                "operationId": "deleteAddress",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Xóa thành công"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/auth/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Đăng ký tài khoản người dùng mới",
+                "description": "Đăng ký tài khoản mới và sinh ví điện tử tự động với số dư ban đầu bằng 0 VND",
+                "operationId": "registerUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Nguyễn Văn A"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "vana@gmail.com"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "0987654321"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "Secret123@"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "Secret123@"
+                                    },
+                                    "currency": {
+                                        "type": "string",
+                                        "example": "VND"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Đăng ký thành công",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Đăng ký tài khoản thành công và đã tự động khởi tạo ví."
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Dữ liệu validate không hợp lệ"
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Đăng nhập tài khoản",
+                "description": "Đăng nhập bằng Email, Password và nhận Sanctum Bearer Token. Giới hạn 5 lần đăng nhập sai liên tiếp.",
+                "operationId": "loginUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "vana@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "Secret123@"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Đăng nhập thành công",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Đăng nhập thành công."
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "1|SanctumPlainTextTokenValueHere"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Thông tin đăng nhập không khớp hoặc bị khóa login"
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Đăng xuất tài khoản",
+                "description": "Hũy bỏ token hiện tại của người dùng",
+                "operationId": "logoutUser",
+                "responses": {
+                    "200": {
+                        "description": "Đăng xuất thành công",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Đăng xuất và hủy token thành công."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/bank-accounts": {
+            "get": {
+                "tags": [
+                    "Bank Accounts"
+                ],
+                "summary": "Danh sách tài khoản ngân hàng liên kết",
+                "operationId": "getBankAccounts",
+                "responses": {
+                    "200": {
+                        "description": "Thành công"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Bank Accounts"
+                ],
+                "summary": "Liên kết tài khoản ngân hàng mới",
+                "operationId": "storeBankAccount",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "bank_name",
+                                    "bank_code",
+                                    "account_number",
+                                    "account_name"
+                                ],
+                                "properties": {
+                                    "bank_name": {
+                                        "type": "string",
+                                        "example": "Vietcombank"
+                                    },
+                                    "bank_code": {
+                                        "type": "string",
+                                        "example": "VCB"
+                                    },
+                                    "account_number": {
+                                        "type": "string",
+                                        "example": "0071001234567"
+                                    },
+                                    "account_name": {
+                                        "type": "string",
+                                        "example": "NGUYEN VAN A"
+                                    },
+                                    "branch": {
+                                        "type": "string",
+                                        "example": "Chi nhánh TP.HCM"
+                                    },
+                                    "is_default": {
+                                        "type": "boolean",
+                                        "example": false
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Liên kết thành công"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/bank-accounts/{id}": {
+            "delete": {
+                "tags": [
+                    "Bank Accounts"
+                ],
+                "summary": "Gỡ bỏ tài khoản ngân hàng liên kết",
+                "operationId": "deleteBankAccount",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Xóa thành công"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/wallet/balance": {
+            "get": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Kiểm tra số dư ví hiện tại",
+                "description": "Trả về thông tin ví của người dùng đang được đăng nhập gồm số dư và tiền tệ.",
+                "operationId": "getWalletBalance",
+                "responses": {
+                    "200": {
+                        "description": "Thành công",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "wallet_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "balance": {
+                                                    "type": "string",
+                                                    "example": "1500000.00"
+                                                },
+                                                "currency": {
+                                                    "type": "string",
+                                                    "example": "VND"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/wallet/deposit": {
+            "post": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Webhook nhận nạp tiền",
+                "description": "API Webhook dành cho các cổng thanh toán bên thứ ba gửi IPN để cộng tiền vào tài khoản ví sau khi thanh toán thành công.",
+                "operationId": "depositWallet",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "wallet_id",
+                                    "amount",
+                                    "reference_id",
+                                    "signature"
+                                ],
+                                "properties": {
+                                    "wallet_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "amount": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 500000
+                                    },
+                                    "reference_id": {
+                                        "type": "string",
+                                        "example": "dep_ref_982347923"
+                                    },
+                                    "signature": {
+                                        "type": "string",
+                                        "example": "9e107d9d372bb6826bd81..."
+                                    },
+                                    "metadata": {
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Nạp tiền thành công",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Nạp tiền vào tài khoản thành công."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "transaction_id": {
+                                                    "type": "integer",
+                                                    "example": 12
+                                                },
+                                                "balance_after": {
+                                                    "type": "string",
+                                                    "example": "500000.00"
+                                                },
+                                                "reference_id": {
+                                                    "type": "string",
+                                                    "example": "dep_ref_982347923"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/wallet/transfer": {
+            "post": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Chuyển tiền giữa hai ví",
+                "description": "Trừ số dư ví A (người chuyển hiện tại), cộng số dư ví B, ghi nhận 2 giao dịch transfer_out và transfer_in.",
+                "operationId": "transferMoney",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "receiver_wallet_id",
+                                    "amount"
+                                ],
+                                "properties": {
+                                    "receiver_wallet_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "amount": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 50000
+                                    },
+                                    "note": {
+                                        "type": "string",
+                                        "example": "Trả tiền ăn trưa"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Chuyển tiền thành công",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Chuyển tiền thành công."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "reference_id": {
+                                                    "type": "string",
+                                                    "example": "uuid-string-xxxx-yyyy"
+                                                },
+                                                "balance": {
+                                                    "type": "string",
+                                                    "example": "1450000.00"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "Authorization",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Addresses",
+            "description": "Addresses"
+        },
+        {
+            "name": "Authentication",
+            "description": "Authentication"
+        },
+        {
+            "name": "Bank Accounts",
+            "description": "Bank Accounts"
+        },
+        {
+            "name": "Wallet",
+            "description": "Wallet"
+        }
+    ]
+}

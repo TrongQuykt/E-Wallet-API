@@ -1,0 +1,1 @@
+Luôn tuân thủ nghiêm ngặt các nguyên tắc và thứ tự ưu tiên được quy định tại [Principles-PHP]. Trong trường hợp xảy ra xung đột, quy tắc có độ ưu tiên cao hơn (số thứ tự nhỏ hơn) sẽ luôn được áp dụng.
