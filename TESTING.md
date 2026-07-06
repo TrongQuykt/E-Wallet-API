@@ -1,4 +1,4 @@
-# 🧪 Hướng Dẫn Testing — E-Wallet API
+# Hướng Dẫn Testing — E-Wallet API
 
 Tài liệu này hướng dẫn 2 phương pháp kiểm thử:
 1. **Automated Test** — PHPUnit chạy tự động qua terminal
@@ -6,7 +6,7 @@ Tài liệu này hướng dẫn 2 phương pháp kiểm thử:
 
 ---
 
-## 📑 Mục Lục
+## Mục Lục
 
 - [Automated Tests (PHPUnit)](#-automated-tests-phpunit)
 - [Manual Tests — Swagger UI](#-manual-tests--swagger-ui)
@@ -16,7 +16,7 @@ Tài liệu này hướng dẫn 2 phương pháp kiểm thử:
 
 ---
 
-## ✅ Automated Tests (PHPUnit)
+## Automated Tests (PHPUnit)
 
 Các test chạy với **SQLite in-memory** — không cần MySQL hay Redis đang chạy.
 
@@ -60,7 +60,7 @@ php artisan test --filter test_transfer_success
 
 ---
 
-## 🌐 Manual Tests — Swagger UI
+## Manual Tests — Swagger UI
 
 ### Bước 0: Khởi Chạy Server
 
@@ -73,7 +73,7 @@ Mở trình duyệt: **http://127.0.0.1:8000/api/documentation**
 
 ---
 
-### 🔐 1. Đăng Ký Tài Khoản
+### 1. Đăng Ký Tài Khoản
 
 **Endpoint:** `POST /api/v1/auth/register`
 
@@ -109,7 +109,7 @@ Vào Swagger UI → Click **Authentication** → Click **POST /register** → **
 
 ---
 
-### 🔑 2. Đăng Nhập
+### 2. Đăng Nhập
 
 **Endpoint:** `POST /api/v1/auth/login`
 
@@ -132,9 +132,9 @@ Vào Swagger UI → Click **Authentication** → Click **POST /register** → **
 
 ---
 
-### 🔓 3. Xác Thực Token Trên Swagger UI
+### 3. Xác Thực Token Trên Swagger UI
 
-Click nút **Authorize 🔓** ở góc trên phải → Nhập vào ô `bearerAuth`:
+Click nút **Authorize** ở góc trên phải → Nhập vào ô `bearerAuth`:
 
 ```
 Bearer 1|AbCdEfGhIjKlMnOpQrStUvWxYz...
@@ -144,7 +144,7 @@ Click **Authorize** rồi **Close**.
 
 ---
 
-### 💰 4. Kiểm Tra Số Dư
+### 4. Kiểm Tra Số Dư
 
 **Endpoint:** `GET /api/v1/wallet/balance`
 
@@ -164,7 +164,7 @@ Không cần body. Click **Execute**.
 
 ---
 
-### 💳 5. Nạp Tiền (Webhook Deposit)
+### 5. Nạp Tiền (Webhook Deposit)
 
 **Endpoint:** `POST /api/v1/wallet/deposit`
 
@@ -197,7 +197,7 @@ Không cần body. Click **Execute**.
 
 ---
 
-### 💸 6. Chuyển Tiền
+### 6. Chuyển Tiền
 
 **Yêu cầu:** Phải có ít nhất 2 tài khoản. Đăng ký thêm tài khoản thứ 2 trước:
 
@@ -238,7 +238,7 @@ Không cần body. Click **Execute**.
 
 ---
 
-### 🔒 7. Test Lockout Brute-force
+### 7. Test Lockout Brute-force
 
 Thử đăng nhập sai **6 lần liên tiếp** với email đúng nhưng password sai:
 
@@ -258,7 +258,7 @@ Từ lần **thứ 6** sẽ nhận:
 
 ---
 
-## 💻 Manual Tests — PowerShell
+## Manual Tests — PowerShell
 
 ### Đăng Ký
 
@@ -303,7 +303,7 @@ Invoke-RestMethod -Method Post `
 
 ---
 
-## 🔑 Tạo Signature Webhook Deposit
+## Tạo Signature Webhook Deposit
 
 Signature là **HMAC-SHA256** của chuỗi `"{wallet_id}|{amount}|{reference_id}"` dùng key `WALLET_CHECKSUM_SECRET` trong `.env`.
 
@@ -347,7 +347,7 @@ Invoke-RestMethod -Method Post `
 
 ---
 
-## 🔎 Artisan Audit Command
+## Artisan Audit Command
 
 Sau khi đã có giao dịch, chạy lệnh đối soát số dư:
 
